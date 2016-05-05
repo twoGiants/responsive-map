@@ -1,36 +1,80 @@
-var map;
+(function() {
+    "use strict";
+    
+    function initialize() {
+        // baths json
+        var bathsSrc = 'http://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:BADESTELLENOGD&srsName=EPSG:4326&outputFormat=json';
+        
+        // map properties
+        var myCenter = new google.maps.LatLng(48.208174, 16.373819);
+        var mapProp  = {
+            center: myCenter,
+            zoom: 13,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            disableDefaultUI: true
+        };
 
-function initialize() {
-    var mapOptions = {
-        zoom: 2,
-        center: {
-            lat: -33.865427,
-            lng: 151.196123
-        },
-        mapTypeId: google.maps.MapTypeId.TERRAIN
-    };
-    map = new google.maps.Map(document.getElementById('map'),
-        mapOptions);
+        // map
+        var map = new google.maps.Map($('#map')[0], mapProp);
 
-    // Create a <script> tag and set the USGS URL as the source.
-    var script = document.createElement('script');
+        // marker
+        var marker = new google.maps.Marker({
+            position: myCenter,
+            map: map
+        });
+        
+        // message
+        var message = new google.maps.InfoWindow({
+            content: "Hello World!"
+        });
+        message.open(map, marker);
+        
+        // buttons
+        google.maps.event.addDomListener($("#taxis")[0], 'click', zoomIn);
+        google.maps.event.addDomListener($("#baths")[0], 'click', zoomOut);
+    
+        function zoomIn() {
+            map.setZoom(15);
+            map.setCenter(marker.getPosition());
+        }
+        
+        function zoomOut() {
+            map.setZoom(12);
+            map.setCenter(marker.getPosition());
+        }
+        
+        taxis(map);
+    }
 
-    // (In this example we use a locally stored copy instead.)
-    //                     script.src = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp';
-    script.src = 'http://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TAXIOGD&srsName=EPSG:4326&outputFormat=json';
-    //        script.src = 'earthquake_GeoJSONP.js';
-    $.getJSON(script.src, function (data) {
-        //                console.log(data);
-        document.getElementsByTagName('head')[0].appendChild(script);
-        //                map.data.addGeoJson(data);
-    });
-
-    //            
-}
-
-//        function eqfeed_callback(results) {
-//            map.data.addGeoJson(results);
-//        }
-
-// Call the initialize function after the page has finished loading
-google.maps.event.addDomListener(window, 'load', initialize);
+    google.maps.event.addDomListener(window, 'load', initialize);
+    
+    function taxis(map) {
+        // taxi json
+        var taxiSrc = 'http://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TAXIOGD&srsName=EPSG:4326&outputFormat=json';
+        
+        // Taxi data
+        $.getJSON(taxiSrc, taxiDataCb);
+        
+        function taxiDataCb(data) {
+            var taxiPoints = data.features;
+            log(taxiPoints[0].geometry.coordinates[0]);
+            log(taxiPoints[0].properties.ADRESSE);
+            
+            var marker, i, latLng;
+            
+            for (i = 0; i < taxiPoints.length; i++) {
+                latLng = taxiPoints[i].geometry.coordinates[0];
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(latLng[1], latLng[0]),
+                    map: map
+                });
+                log(latLng);
+            }
+        }
+    }
+    
+    // tools
+    function log(stuff) {
+        console.log(stuff);
+    }
+}());
