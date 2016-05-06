@@ -1,0 +1,14 @@
+{
+  "name": "bitsfabrik",
+  "description": "Responsive map",
+  "main": "app.js",
+  "authors": [
+    "Stanislav"
+  ],
+  "dependencies": {
+    "normalize-css": "^4.1.1",
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.3",
+    "google-maps": "^3.2.1"
+  }
+}
