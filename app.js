@@ -1,10 +1,10 @@
 (function() {
     "use strict";
     
-    // start initialize whn browser is ready
-    google.maps.event.addDomListener(window, 'load', init);
+    // start main whn browser is ready
+    google.maps.event.addDomListener(window, 'load', main);
     
-    function init() {
+    function main() {
         var map;
         var taxisSrc = 'http://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TAXIOGD&srsName=EPSG:4326&outputFormat=json';
         var bathSrc = 'http://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:BADESTELLENOGD&srsName=EPSG:4326&outputFormat=json';
@@ -12,13 +12,31 @@
         // show map
         map = mapSetup();
         
+        google.maps.event.addListener(map, 'center_changed', function () {
+            log(map.getCenter());  
+        });
+        
         // load and show taxis
         getAndShowData(map, taxisSrc);
         
         // load and show baths
         getAndShowData(map, bathSrc);
+        
+        // handle window resize
+        resizeMap(map);
     }
     
+    function resizeMap(map) {
+        google.maps.event.addDomListener(window, "resize", function () {
+            var currCenter = map.getCenter();
+            
+            google.maps.event.trigger(map, "resize");
+            
+            map.setCenter(currCenter);
+        });
+    }
+    
+    // map properties
     function mapSetup() {
         var mapProp = {};
         var map     = {};
@@ -35,6 +53,7 @@
         return map;
     }
     
+    // app logic
     function getAndShowData(map, src) {
         $.getJSON(src, jsonDataCb);
         
@@ -64,7 +83,7 @@
 
                     marker  = new google.maps.Marker({
                         position: new google.maps.LatLng(latLng[1], latLng[0]),
-                        icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+                        icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
                         map: map
                     });
                 } else {
@@ -73,7 +92,7 @@
 
                     marker  = new google.maps.Marker({
                         position: new google.maps.LatLng(latLng[1], latLng[0]),
-                        icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                        icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
                         map: map
                     });
                 }
@@ -89,16 +108,23 @@
                 google.maps.event.addListener(marker, 'mouseout', mouseOutHandler(marker));
             }
 
-            google.maps.event.addDomListener($("#" + type)[0], 'click', buttonClickHandler(markers));
+            google.maps.event.addDomListener($('#' + type)[0], 'click', buttonClickHandler(markers, type));
         }
     }
        
     // event handlers
-    function buttonClickHandler(markers) {
+    function buttonClickHandler(markers, type) {
         return function buttonClickHandler() {
             for (var i in markers) {
                 markers[i].setVisible(!(markers[i].getVisible()));
             }
+            
+            if($('#' + type).hasClass('active')) {
+                $('#' + type).removeClass('active');
+            } else {
+                $('#' + type).addClass('active');
+            }
+            
         };
     }
     

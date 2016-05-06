@@ -9,6 +9,7 @@
     <script src="https://maps.googleapis.com/maps/api/js"></script>
 
     <!--  bower:css  -->
+    <link rel="stylesheet" href="bower_components/normalize-css/normalize.css" />
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
 
     <link rel="stylesheet" href="style.css" />
@@ -17,10 +18,22 @@
 </head>
 
 <body>
-    <button id="taxis" type="button" class="btn btn-lg btn-primary">Taxi</button>
-    <button id="baths" type="button" class="btn btn-lg btn-danger">Bad</button>
-
-    <div id="map"></div>
+    
+    <div class="container-fluid col-md-12 col-xs-12">
+        
+        <div class="jumbotron">
+            <div class="text-center">
+                <div class="btn-group" role="group">
+                    <button id="baths" type="button" class="btn btn-lg btn-primary active">B&auml;der</button>
+                    <button id="taxis" type="button" class="btn btn-lg btn-danger active">Taxis</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="map"></div>
+        
+    </div><!-- /.container-fluid -->
+    
 </body>
 
 </html>

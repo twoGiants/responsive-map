@@ -1,5 +1,18 @@
+body {
+    padding-top: 50px;
+    height: 100%;
+}
+
+button {
+    width: 100px;
+}
+
 #map {
-    width: 500px;
-    height: 400px;
+    /*    width: 500px;*/
+    height: 100%;
     background-color: #CCC;
+}
+
+.btn:active, .btn:focus {
+    outline: none !important;
 }
