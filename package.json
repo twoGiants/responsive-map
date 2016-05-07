@@ -2,7 +2,7 @@
   "name": "bitsfabrik",
   "version": "0.0.1",
   "description": "Responsive map",
-  "main": "app.js",
+  "main": "scripts/config.js",
   "dependencies": {
     "bower": "^1.7.9"
   },

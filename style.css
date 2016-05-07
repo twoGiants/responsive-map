@@ -8,11 +8,11 @@ button {
 }
 
 #map {
-    /*    width: 500px;*/
     height: 100%;
     background-color: #CCC;
 }
 
-.btn:active, .btn:focus {
+.btn: active,
+.btn: focus {
     outline: none !important;
 }
