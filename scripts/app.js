@@ -1,7 +1,7 @@
 requirejs(['jquery', 'bootstrap'], function ($, bootstrap) {
     'use strict';
 
-    // start main whn browser is ready
+    // start main when browser is ready
     google.maps.event.addDomListener(window, 'load', main);
 
     function main() {
