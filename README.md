@@ -1,1 +1,2 @@
-# responsive-map
+# Responsive Map
+Umsetzung einer einfachen, responsive Kartenanwendung.
