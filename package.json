@@ -1,14 +1,14 @@
 {
-  "name": "bitsfabrik",
-  "version": "0.0.1",
+  "name": "responsive-map",
+  "version": "1.0.0",
   "description": "Responsive map",
-  "main": "scripts/config.js",
+  "main": "scripts/app.js",
   "dependencies": {
     "bower": "^1.7.9"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "bower install"
   },
   "author": "Stanislav"
 }

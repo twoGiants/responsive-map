@@ -5,9 +5,9 @@ requirejs.config({
     }
 });
 
-loadCss('../bower_components/normalize-css/normalize.css');
-loadCss('../bower_components/bootstrap/dist/css/bootstrap.css');
-loadCss('../style.css');
+loadCss('bower_components/normalize-css/normalize.css');
+loadCss('bower_components/bootstrap/dist/css/bootstrap.css');
+loadCss('style.css');
 
 function loadCss(url) {
     var link = document.createElement("link");
