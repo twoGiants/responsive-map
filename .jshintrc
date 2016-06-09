@@ -1,9 +1,0 @@
-{
-    // Custom Globals
-    "globals" : {
-        "$"         : false,
-        "window"    : false,
-        "google"    : false,
-        "console"   : false
-    }
-}
